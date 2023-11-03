@@ -3,6 +3,7 @@
     <input v-model="name" type="text" placeholder="Name" />
     <button type="button">Submit</button>
   </form>
+  <p>{{ message }}</p>
 </template>
 
 <script>
@@ -11,6 +12,7 @@ export default {
   data() {
     return {
       name: "",
+      message: "",
     };
   },
   methods: {
