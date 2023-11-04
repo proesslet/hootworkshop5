@@ -1,12 +1,14 @@
 <template>
   <form>
     <input v-model="name" type="text" placeholder="Name" />
-    <button type="button">Submit</button>
+    <button type="button" @click="submit">Submit</button>
   </form>
   <p>{{ message }}</p>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "UserForm",
   data() {
@@ -17,7 +19,18 @@ export default {
   },
   methods: {
     submit() {
-      // Todo: submit the form
+      axios("http://localhost:3000/addPerson", {
+        method: "POST",
+        data: {
+          name: this.name,
+        },
+      })
+        .then((response) => {
+          this.message = response.data.message;
+        })
+        .catch((error) => {
+          this.message = error;
+        });
     },
   },
 };

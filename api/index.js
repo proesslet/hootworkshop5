@@ -1,18 +1,30 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express();
+
+var cors = require("cors");
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
 
 app.get("/myname", (req, res) => {
   res.send("Preston Roesslet");
 });
 
-app.get("/myfavoritelanguages", (req, res) => {
-  var langauges = {
-    name: "Preston",
-    languages: ["Java", "Javascript"],
-  };
+var people = [];
 
-  res.status(200).json(langauges);
+app.post("/addPerson", (req, res) => {
+  people.push(req.body.name);
+  res.status(200).json({ message: "Person added successfully" });
+});
+
+app.get("/getPeople", (req, res) => {
+  res.status(200).json({ people: people });
 });
 
 app.listen(3000, () => {
